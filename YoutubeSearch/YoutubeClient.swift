@@ -15,7 +15,8 @@ class YoutubeClient {
   }
   private let searchQueue = dispatch_queue_create("YoutubeClient.SearchQueue", nil)
   private struct Constants {
-    static let apiKey = "AIzaSyAZ2S1DrOGjgra13vIQKCaYwlxxZH2t-uw"
+    //TODO: Inserta tu API Key
+    static let apiKey = "Youtube_API_KEY"
     static let items = "items"
     struct Error {
       static let errorDomain = "YoutubeClient"
@@ -153,7 +154,6 @@ class YoutubeClient {
   
   private func parseJSON(data: NSData) -> Result {
     var jsonError : NSError?
-    let dictionaryString :String! = NSString(data: data, encoding: NSUTF8StringEncoding)
     let dataDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &jsonError) as [String:AnyObject]?
     if jsonError != nil {
       return Result.failure(error: jsonError!)
