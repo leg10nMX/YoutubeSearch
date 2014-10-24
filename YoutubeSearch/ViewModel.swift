@@ -7,8 +7,15 @@
 //
 
 import Foundation
+protocol ViewModelDelegate: class {
+  func searchResultsDidChange()
+}
 
 class ViewModel {
-  private var items :[[String:AnyObject]]?
+  private var items :[YoutubeClient.SearchItem]?
+  weak var delegate :ViewModelDelegate!
   
+  init (delegate:ViewModelDelegate) {
+    self.delegate = delegate
+  }
 }
