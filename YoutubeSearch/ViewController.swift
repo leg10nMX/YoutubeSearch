@@ -8,7 +8,10 @@
 
 import UIKit
 
-class ViewController: UITableViewController, ViewModelDelegate {
+class ViewController: UITableViewController, ViewModelDelegate, UISearchBarDelegate {
+  private struct Constants {
+    static let CellIdentifier = "ViewController.Cell"
+  }
 
   let model: ViewModel!
   
@@ -33,6 +36,31 @@ class ViewController: UITableViewController, ViewModelDelegate {
     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
     self.presentViewController(alert, animated: true, completion: nil)
   }
+  
+  func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    self.model.query = searchBar.text
+    searchBar.resignFirstResponder()
+  }
+  
+  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    return 1
+  }
+  
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return self.model.itemCount()
+  }
+  
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    var cell = tableView.dequeueReusableCellWithIdentifier(Constants.CellIdentifier) as UITableViewCell?
+    if cell == nil {
+      cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: Constants.CellIdentifier)
+    }
+    let item = self.model.itemAtIndex(indexPath.row)
+    cell?.textLabel.text = item.title
+    cell?.detailTextLabel?.text = item.videoDescription
+    return cell!
+  }
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()

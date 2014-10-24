@@ -38,4 +38,15 @@ class ViewModel {
   init (delegate:ViewModelDelegate) {
     self.delegate = delegate
   }
+  
+  func itemCount()-> Int {
+    if let count = self.items?.count {
+      return count
+    }
+    return 0
+  }
+  
+  func itemAtIndex(index: Int) -> YoutubeClient.SearchItem {
+    return self.items![index]
+  }
 }
